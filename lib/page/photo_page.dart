@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:photo_album/model/photo.dart';
 import 'package:photo_album/network/fetch_photo.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,14 @@ class PhotoPage extends StatelessWidget {
         future: getPhotosFromApi(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return  Center(
+              child: SpinKitWaveSpinner(
+                color:Colors.blueAccent.shade200,
+                waveColor: Colors.blueAccent.shade100,
+                trackColor: Colors.white12,
+                size: 100,
+              ),
+            );
           } else if (snapshot.hasError) {
             if (snapshot.error is TimeoutException) {
               return const Center(
@@ -46,14 +54,21 @@ class PhotoPage extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: ListTile(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoDetailsPage(photo: photo))),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PhotoDetailsPage(photo: photo))),
                     leading: Hero(
                       tag: photo.id!,
                       child: Image.network(photo.thumbnailUrl ??
                           'https://picsum.photos/200/300'),
                     ),
-                    title: Text(photo.title ?? 'N/A',
-                        maxLines: 2, overflow: TextOverflow.ellipsis,),
+                    title: Text(
+                      photo.title ?? 'N/A',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 );
               },
