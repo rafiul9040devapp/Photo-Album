@@ -14,6 +14,9 @@ class PhotoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Photo Album'),
+        backgroundColor: Colors.blueAccent.shade200,
+        foregroundColor: Colors.white,
+        centerTitle: true,
       ),
       body: FutureBuilder<List<Photo>>(
         future: getPhotosFromApi(http.Client()),
