@@ -43,16 +43,17 @@ class PhotoPage extends StatelessWidget {
               itemCount: snapshot.data?.length ?? List.empty().length,
               itemBuilder: (context, index) {
                 final photo = snapshot.data![index];
-                return InkWell(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoDetailsPage(photo: photo))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ListTile(
-                      leading: Image.network(photo.thumbnailUrl ??
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ListTile(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoDetailsPage(photo: photo))),
+                    leading: Hero(
+                      tag: photo.id!,
+                      child: Image.network(photo.thumbnailUrl ??
                           'https://picsum.photos/200/300'),
-                      title: Text(photo.title ?? 'N/A',
-                          maxLines: 2, overflow: TextOverflow.ellipsis,),
                     ),
+                    title: Text(photo.title ?? 'N/A',
+                        maxLines: 2, overflow: TextOverflow.ellipsis,),
                   ),
                 );
               },

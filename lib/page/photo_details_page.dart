@@ -17,11 +17,14 @@ class PhotoDetailsPage extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Image.network(
-            photo.url ?? '',
-            height: double.infinity,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Hero(
+            tag: photo.id!,
+            child: Image.network(
+              photo.url ?? '',
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           Align(
             alignment: Alignment.center,
